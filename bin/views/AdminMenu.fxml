@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminMenuController">
+   <top>
+      <VBox spacing="10.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <Label text="Menu Administrateur" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Region HBox.hgrow="ALWAYS" />
+                  
+               </children>
+            </HBox>
+            <Separator />
+          <ToolBar>
+    <items>
+        <Button fx:id="dashboardButton" onAction="#openDashboard" text="Dashboard" />
+        <Button fx:id="gestionNotesButton" onAction="#openGestionNotes" text="Gestion des Notes" />
+         <Button fx:id="logoutButton" onAction="#handleLogout" text="Déconnexion" />
+    </items>
+</ToolBar>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <AnchorPane fx:id="contentPane" BorderPane.alignment="CENTER">
+         <!-- Le contenu sera chargé dynamiquement ici -->
+      </AnchorPane>
+   </center>
+</BorderPane>

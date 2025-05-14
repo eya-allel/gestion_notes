@@ -1,6 +1,7 @@
 package models;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Note {
     private String matiere;  // "TP Java" ou "Cours Java"
@@ -60,6 +61,7 @@ public class Note {
     
     @Override
     public String toString() {
-        return String.format("%s - %s: %.2f/20 (%s)", matiere, type, valeur, date);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return String.format("%s - %s: %.2f/20 (%s)", matiere, type, valeur, date.format(formatter));
     }
 }

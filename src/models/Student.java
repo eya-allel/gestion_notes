@@ -33,6 +33,16 @@ public class Student extends User {
         return students.containsKey(username);
     }
     
+    // Méthode pour récupérer tous les étudiants
+    public static List<Student> getAllStudents() {
+        return new ArrayList<>(students.values());
+    }
+    
+    // Méthode pour supprimer un étudiant
+    public static void removeStudent(String username) {
+        students.remove(username);
+    }
+    
     @Override
     public boolean authenticate(String username, String password) {
         Student student = students.get(username);
@@ -113,5 +123,10 @@ public class Student extends User {
         double noteCours = calculateCoursJavaNoteFinale();
         
         return (noteTP * 0.5) + (noteCours * 0.5);
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s %s (%s)", prenom, nom, matricule);
     }
 }

@@ -13,9 +13,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.Admin;
+import models.Note;
 import models.Student;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class LoginController {
     
@@ -41,6 +43,29 @@ public class LoginController {
             Student student1 = new Student("etudiant1", "pass1", "Dupont", "Jean", "E001");
             Student.addStudent(student1);
         }
+        
+        // Ajouter quelques autres étudiants pour les tests
+        if (!Student.studentExists("etudiant2")) {
+            Student student2 = new Student("etudiant2", "pass2", "Martin", "Sophie", "E002");
+            Student.addStudent(student2);
+            
+            // Ajouter quelques notes pour les tests
+            student2.addNote(new Note("TP Java", "TP Hebdomadaire", 15.0, LocalDate.now().minusDays(30), "Bon travail"));
+            student2.addNote(new Note("TP Java", "Examen TP", 16.5, LocalDate.now().minusDays(15), "Très bon"));
+            student2.addNote(new Note("Cours Java", "DS", 12.0, LocalDate.now().minusDays(20), "Peut mieux faire"));
+            student2.addNote(new Note("Cours Java", "Examen", 14.5, LocalDate.now().minusDays(5), "Bon"));
+        }
+        
+        if (!Student.studentExists("etudiant3")) {
+            Student student3 = new Student("etudiant3", "pass3", "Dubois", "Pierre", "E003");
+            Student.addStudent(student3);
+            
+            // Ajouter quelques notes pour les tests
+            student3.addNote(new Note("TP Java", "TP Hebdomadaire", 8.5, LocalDate.now().minusDays(30), "À améliorer"));
+            student3.addNote(new Note("TP Java", "Examen TP", 9.0, LocalDate.now().minusDays(15), "Passable"));
+            student3.addNote(new Note("Cours Java", "DS", 11.0, LocalDate.now().minusDays(20), "Moyen"));
+            student3.addNote(new Note("Cours Java", "Examen", 13.0, LocalDate.now().minusDays(5), "Assez bien"));
+        }
     }
     
     @FXML
@@ -57,7 +82,7 @@ public class LoginController {
         if (Admin.isAdmin(username)) {
             Admin admin = new Admin();
             if (admin.authenticate(username, password)) {
-                loadAdminDashboard(event);
+                loadAdminMenu(event);
                 return;
             }
         } 
@@ -90,19 +115,19 @@ public class LoginController {
         }
     }
     
-    private void loadAdminDashboard(ActionEvent event) {
+    private void loadAdminMenu(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AdminDashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AdminMenu.fxml"));
             Parent adminView = loader.load();
             Scene adminScene = new Scene(adminView, 800, 600);
             
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("Tableau de Bord Admin");
+            stage.setTitle("Menu Administrateur");
             stage.setScene(adminScene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(AlertType.ERROR, "Erreur", "Impossible de charger le tableau de bord admin.");
+            showAlert(AlertType.ERROR, "Erreur", "Impossible de charger le menu administrateur.");
         }
     }
     

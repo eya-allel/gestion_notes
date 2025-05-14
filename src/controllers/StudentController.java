@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Note;
@@ -77,6 +78,25 @@ public class StudentController {
         tpJavaLabel.setText(String.format("Note TP Java: %.2f/20", noteTPJava));
         coursJavaLabel.setText(String.format("Note Cours Java: %.2f/20", noteCoursJava));
         noteFinaleLabel.setText(String.format("Note Finale: %.2f/20", noteFinale));
+        
+        // Configurer la TableView
+        matiereColumn.setCellValueFactory(new PropertyValueFactory<>("matiere"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        valeurColumn.setCellValueFactory(new PropertyValueFactory<>("valeur"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        
+        // Formater la colonne de valeur pour afficher 2 décimales
+        valeurColumn.setCellFactory(column -> new TableCell<Note, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f", item));
+                }
+            }
+        });
         
         // Charger les notes dans la TableView
         loadNotes();

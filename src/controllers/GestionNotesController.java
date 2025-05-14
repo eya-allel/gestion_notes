@@ -4,22 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
 import models.Note;
 import models.Student;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminController {
+public class GestionNotesController {
     
     @FXML
     private ComboBox<String> studentComboBox;
@@ -51,17 +45,11 @@ public class AdminController {
     @FXML
     private ListView<Note> notesListView;
     
-    @FXML
-    private Button logoutButton;
-    
     private ObservableList<Note> notesList = FXCollections.observableArrayList();
     
     public void initialize() {
         // Initialiser les ComboBox
-        List<String> studentNames = new ArrayList<>();
-        // Récupérer tous les étudiants (dans une vraie application, cela viendrait d'une base de données)
-        studentNames.add("etudiant1"); // Pour les tests
-        studentComboBox.setItems(FXCollections.observableArrayList(studentNames));
+        refreshStudentComboBox();
         
         matiereComboBox.setItems(FXCollections.observableArrayList("TP Java", "Cours Java"));
         
@@ -104,6 +92,14 @@ public class AdminController {
                 commentaireArea.setText(newVal.getCommentaire());
             }
         });
+    }
+    
+    private void refreshStudentComboBox() {
+        List<String> studentNames = new ArrayList<>();
+        for (Student student : Student.getAllStudents()) {
+            studentNames.add(student.getUsername());
+        }
+        studentComboBox.setItems(FXCollections.observableArrayList(studentNames));
     }
     
     private void loadStudentNotes(String username) {
@@ -234,22 +230,6 @@ public class AdminController {
             
             // Réinitialiser les champs
             resetFields();
-        }
-    }
-    
-    @FXML
-    private void handleLogout(ActionEvent event) {
-        try {
-            Parent loginView = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
-            Scene loginScene = new Scene(loginView, 600, 400);
-            
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("Connexion");
-            stage.setScene(loginScene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(AlertType.ERROR, "Erreur", "Impossible de retourner à la page de connexion.");
         }
     }
     

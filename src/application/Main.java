@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            
+            // Charger la vue de login
             Parent root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
             Scene scene = new Scene(root, 600, 400);
             scene.getStylesheets().add(getClass().getResource("/styles/application.css").toExternalForm());
